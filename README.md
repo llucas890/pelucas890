@@ -1,5 +1,5 @@
-- 👋 Hi, I’m Lucas
-- 👀 I’m interested in an INTERNSHIP
-- 🌱 I’m currently learning HTML, CSS, JS.
-- 💞️ I’m looking to collaborate on any project available to get some experience
-- 📫 How to reach me, linkedin lucaslescano20
+- 👋 Hi, I’m Lucas.
+- 👀 I’m interested in an INTERNSHIP.
+- 🌱 I’m a Fullstack Developer.
+- 💞️ I’m looking for a work.
+- 📫 How to reach me, linkedin/lucaslescano20.
