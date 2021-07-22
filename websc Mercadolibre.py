@@ -16,8 +16,6 @@ nombreslista = list()
 precios = soup.find_all('span', class_='price-tag-fraction', limit=50)
 precioslista = list()
 
-contador = 0
-
 for nombre in nombres:
     nombreslista.append(nombre.get_text())
 
