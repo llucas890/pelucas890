@@ -14,7 +14,7 @@ precios = soup.find_all('span', class_='price-tag-fraction', limit=10)
 
 for nombre in nombres:
     for precio in precios:
-        print(nombre.get_text() + ' $ ' + precio.get_text())
+        print(f'[{nombre.get_text()}] [${precio.get_text()}]')
 
 
 msvcrt.getch()
