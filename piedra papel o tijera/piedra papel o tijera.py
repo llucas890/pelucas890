@@ -9,13 +9,13 @@ print('Bienvenido a Piedra, papel o tijera. Diviertete')
 print('Si deseas salir, escribe: Salir')
 print('Si deseas ver tu puntaje, escribe: Puntaje')
 while eleccion != 'Salir':
-    print('Piedra, Papel o Tijera' + Fore.GREEN + Fore.RESET)
+    print('1. Piedra, 2. Papel o 3. Tijera')
     eleccion = input('Cual es tu eleccion: \n')
     if eleccion == 'Puntaje':
         print(f'Tu puntaje es: {puntaje}')
     if eleccion == 'Ayuda':
         print('Nadie puede ayudarte ahora')
-    if eleccion == 'Piedra':
+    if eleccion == 'Piedra' or eleccion == '1':
         robot = random.choice(lista)
         print(f'El robot elijio {robot}')
         if robot == 'Piedra':
@@ -28,7 +28,7 @@ while eleccion != 'Salir':
             puntaje += 1
             print('Ganaste!!')
             print(f'Tu puntaje es: {puntaje} \n')
-    elif eleccion == 'Papel':
+    elif eleccion == 'Papel' or eleccion == '2':
         robot = random.choice(lista)
         print(f'El robot elijio {robot}')
         if robot == 'Piedra':
@@ -41,7 +41,7 @@ while eleccion != 'Salir':
             print(f'Tu puntaje es: {puntaje}\n')
         elif robot == 'Tijera':
             print('Los dos eligieron tijera... es un empate! \n')
-    elif eleccion == 'Tijera':
+    elif eleccion == 'Tijera' or eleccion == '3':
         robot = random.choice(lista)
         print(f'El robot elijio {robot}')
         if robot == 'Piedra':
