@@ -1,5 +1,4 @@
 - 👋 Hi, I’m Lucas.
-- 👀 I’m interested in an INTERNSHIP.
-- 🌱 I’m a Fullstack Developer.
+- 🌱 I’m a Python Developer.
 - 💞️ I’m looking for a work.
 - 📫 How to reach me, linkedin/lucaslescano20.
