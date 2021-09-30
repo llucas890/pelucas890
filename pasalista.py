@@ -1,21 +1,14 @@
+import string
 from openpyxl import load_workbook
+from openpyxl.xml.constants import MAX_ROW
 
 FILE_PATH = 'E:\Documentos\inva\INVA2.xlsx'
 
 workbook = load_workbook(FILE_PATH)
 wb = workbook.active
 busqueda = ''
-colA = wb['A']
-colC = wb['C']
-colE = wb['E']
-colG = wb['G']
-colI = wb['I']
-colNB = wb['B']
-colND = wb['D']
-colNF = wb['F']
-colNH = wb['H']
-colNJ = wb['J']
 while busqueda != '6':
+    print('')
     print('1 Para sumar asistencias')
     print('2 Para restar asist 34 asist')
     print('3 Para restar 2 box al stock')
@@ -23,9 +16,11 @@ while busqueda != '6':
     print('5 Para guardar y salir')
     print('6 Para salir solamente sin guardar')
     print('7 Para restar 20 asist')
+    print('8 Para restar 3 asist semanales')
     print('Programa creado por Lucas Lescano alias Desxz')
+    print('')
     busqueda = input('Ingresa la opcion: \n')
-    
+    print('')
     if busqueda == '1':
         while busqueda != 'SALIR':
                 busqueda = input('Introduce la lista: ')         
@@ -103,3 +98,33 @@ while busqueda != '6':
         break
     if busqueda == '6':
         break
+    if busqueda == '8':
+        print('Restando 3 asist semanales\n')
+        for row in range(2, wb.max_row+1):
+            cell = wb.cell(row=row, column=2)
+            if cell.value is not wb['B17']:
+                cell.value = cell.value - 3
+                print('Restando en la columna 2')
+        for row in range(2, wb.max_row+1):
+            cell = wb.cell(row=row, column=4)
+            if cell.value is not wb['B17']:
+                cell.value = cell.value - 3
+                print('Restando en la columna 4')
+        for row in range(2, wb.max_row+1):
+            cell = wb.cell(row=row, column=6)
+            if cell.value is not wb['B17']:
+                cell.value = cell.value - 3
+                print('Restando en la columna 6')
+        for row in range(2, wb.max_row+1):
+            cell = wb.cell(row=row, column=8)
+            if cell.value is not wb['B17']:
+                cell.value = cell.value - 3
+                print('Restando en la columna 8')
+        for row in range(2, wb.max_row+1):
+            cell = wb.cell(row=row, column=10)
+            if cell.value is not wb['B17']:
+                cell.value = cell.value - 3                
+                print('Restando en la columna 10')
+        stock = wb['B17']
+        stock.value = stock.value + 3
+        print(stock.value)
