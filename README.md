@@ -2,3 +2,4 @@
 - 🌱 I’m a Python Developer.
 - 💞️ I’m looking for a work.
 - 📫 How to reach me, linkedin/lucaslescano20.
+- 🌐 Portfolio (not finished): llucas890
