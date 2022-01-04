@@ -1,5 +1,5 @@
 - 👋 Hi, I’m Lucas.
-- 🌱 I’m a Python Developer.
-- 💞️ I’m looking for a work.
+- 🌱 I’m currently learning skills on Python and Javascript.
+- 💞️ I’m looking for a work or a project to collaborate.
 - 📫 How to reach me, linkedin/lucaslescano20.
-- 🌐 Portfolio (not finished): llucas890
+- 🌐 Portfolio (not finished).
