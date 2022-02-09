@@ -1,4 +1,5 @@
 import string
+from tracemalloc import stop
 from openpyxl import load_workbook
 from openpyxl.xml.constants import MAX_ROW
 
@@ -24,7 +25,7 @@ while busqueda != '6':
     print('')
     if busqueda == '1':
         while busqueda != 'SALIR':
-                busqueda = input('////// Introduce la lista: /////')         
+                busqueda = input('Introduce el nombre: ')         
                 busqueda = busqueda.upper()
                 busqueda = busqueda.strip()
                 busqueda = busqueda.replace(" ", "")
@@ -34,22 +35,31 @@ while busqueda != '6':
                 busqueda = busqueda.replace("SrMeLiОDaS", "MELIO")
                 busqueda = busqueda.replace(".", "")
                 busqueda = busqueda.replace("sm", "")
+                busqueda = busqueda.replace("(box)", "")
+                busqueda = busqueda.replace("box", "")
                 for colA,colNB,colC, colND,colE, colNF,colG, colNH, colI, colNJ in wb:
                     if busqueda in colA.value:
                         wb[f'B{colNB.row}'] = colNB.value + 1
-                        print(f"\nNombre encontrado: {busqueda}. Asistencias: {wb[f'B{colNB.row}'].value}\n")
+                        # print(f"\nNombre encontrado: {busqueda}. Asistencias: {wb[f'B{colNB.row}'].value}\n")
+                        break
                     elif busqueda in colC.value:
                         wb[f'D{colND.row}'] = colND.value + 1
-                        print(f"\nNombre encontrado: {busqueda}. Asistencias: {wb[f'D{colND.row}'].value}\n")
+                        # print(f"\nNombre encontrado: {busqueda}. Asistencias: {wb[f'D{colND.row}'].value}\n")
+                        break
                     elif busqueda in colE.value:
                         wb[f'F{colNF.row}'] = colNF.value + 1
-                        print(f"\nNombre encontrado: {busqueda}. Asistencias: {wb[f'F{colNF.row}'].value}\n")
+                        # print(f"\nNombre encontrado: {busqueda}. Asistencias: {wb[f'F{colNF.row}'].value}\n")
+                        break
                     elif busqueda in colG.value:
                         wb[f'H{colNH.row}'] = colNH.value + 1
-                        print(f"\nNombre encontrado: {busqueda}. Asistencias: {wb[f'H{colNH.row}'].value}\n")
+                        # print(f"\nNombre encontrado: {busqueda}. Asistencias: {wb[f'H{colNH.row}'].value}\n")
+                        break
                     elif busqueda in colI.value:
                         wb[f'J{colNJ.row}'] = colNJ.value + 1
-                        print(f"\nNombre encontrado: {busqueda}. Asistencias: {wb[f'J{colNJ.row}'].value}\n")
+                        # print(f"\nNombre encontrado: {busqueda}. Asistencias: {wb[f'J{colNJ.row}'].value}\n")
+                        break
+                else:
+                    print("//// nombre no encontrado /////\n")
     if busqueda == '2':
         busqueda = input('Ingrese el nombre para restar 34 asist: ')
         busqueda = busqueda.upper()
