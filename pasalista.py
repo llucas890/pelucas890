@@ -1,3 +1,4 @@
+from operator import length_hint
 import string
 from tracemalloc import stop
 from openpyxl import load_workbook
@@ -8,19 +9,23 @@ FILE_PATH = 'E:\Documentos\inva\INVA2.xlsx'
 workbook = load_workbook(FILE_PATH)
 wb = workbook.active
 nombresnoencontrados = []
+listabusqueda = []
 busqueda = ''
 stock = wb['B17']
 while busqueda != '6':
     print('')
     print('1 Para sumar asistencias')
     print('2 Para cobros')
-    print('4 Para agregar una box al stock')
+    print('3 Para agregar nuevos usuarios')
+    print('4 Para busqueda una box al stock')
     print('5 Para guardar y salir')
+    print('6 Para salir sin guardar')
+    print('7 Para eliminar un usuario de la lista')
     print('8 Para restar 3 asist semanales')
     print('9 Eliminar asistencias pasada')
     print('Programa creado por Lucas Lescano alias Desxz')
     print('')
-    busqueda = input('Ingresa la opcion: \n')
+    busqueda = input('Ingresa la opcion: ')
     print('')
     if busqueda == '1':
         while busqueda != 'SALIR':
@@ -37,6 +42,7 @@ while busqueda != '6':
                 busqueda = busqueda.replace("(box)", "")
                 busqueda = busqueda.replace("box", "")
                 busqueda = busqueda.replace("BK", "")
+                listabusqueda.append(busqueda)
                 for colA,colNB,colC, colND,colE, colNF,colG, colNH, colI, colNJ in wb:
                     if busqueda in colA.value:
                         wb[f'B{colNB.row}'] = colNB.value + 1
@@ -62,6 +68,10 @@ while busqueda != '6':
                     nombresnoencontrados.append(busqueda)
                 if busqueda == '2':
                     print(f"Nombres no encontrados: {nombresnoencontrados}")
+                if len(listabusqueda) != len(set(listabusqueda)):
+                    print(listabusqueda)
+                    print(f"Se encontro un duplicado {busqueda}")
+                    break
     if busqueda == '4':
         busqueda = 'STOCK'
         for colA,colNB,colC, colND,colE, colNF,colG, colNH, colI, colNJ in wb:
@@ -281,3 +291,70 @@ while busqueda != '6':
                     break     
             stock.value= stock.value - int(box)
             print(f"Se resto {box} box al stock: {stock.value}\n")
+    if busqueda == "3":
+        agregar = input("Ingrese el nuevo personaje: ")
+        agregar = agregar.upper()
+        busqueda = "LIBRE"
+        for colA,colNB,colC, colND,colE, colNF,colG, colNH, colI, colNJ in wb:
+            if busqueda == colA.value:
+                wb[f'A{colA.row}'] = agregar
+                wb[f'B{colNB.row}'] = 0
+                print(f"Se agrego el usuario {agregar} en columna A")
+                break
+            elif busqueda == colC.value:
+                wb[f'C{colC.row}'] = agregar
+                wb[f'D{colND.row}'] = 0
+                print(f"Se agrego el usuario {agregar} en columna C")
+                break
+            elif busqueda == colE.value:
+                wb[f'E{colE.row}'] = agregar
+                wb[f'F{colNF.row}'] = 0
+                print(f"Se agrego el usuario {agregar} en columna E")
+                break
+            elif busqueda == colG.value:
+                wb[f'G{colG.row}'] = agregar
+                wb[f'H{colNH.row}'] = 0
+                print(f"Se agrego el usuario {agregar} en columna G")
+                break
+            elif busqueda == colI.value:
+                wb[f'I{colI.row}'] = agregar
+                wb[f'J{colNJ.row}'] = 0
+                print(f"Se agrego el usuario {agregar} en columna I")
+                break
+        else:
+            print("No se encontro un slot libre")
+    if busqueda == "7":
+        agregar = input("Ingrese el usuario a eliminar: ")
+        agregar = agregar.upper()
+        busqueda = agregar
+        for colA,colNB,colC, colND,colE, colNF,colG, colNH, colI, colNJ in wb:
+            if busqueda == colA.value:
+                wb[f'A{colA.row}'] = "LIBRE"
+                wb[f'B{colNB.row}'] = 0
+                print(f"Se elimino el usuario {agregar} en columna A")
+                break
+            elif busqueda == colC.value:
+                wb[f'C{colC.row}'] = "LIBRE"
+                wb[f'D{colND.row}'] = 0
+                print(f"Se elimino el usuario {agregar} en columna C")
+                break
+            elif busqueda == colE.value:
+                wb[f'E{colE.row}'] = "LIBRE"
+                wb[f'F{colNF.row}'] = 0
+                print(f"Se ELIMINO el usuario {agregar} en columna E")
+                break
+            elif busqueda == colG.value:
+                wb[f'G{colG.row}'] = "LIBRE"
+                wb[f'H{colNH.row}'] = 0
+                print(f"Se ELIMINO el usuario {agregar} en columna G")
+                break
+            elif busqueda == colI.value:
+                wb[f'I{colI.row}'] = "LIBRE"
+                wb[f'J{colNJ.row}'] = 0
+                print(f"Se ELIMINO el usuario {agregar} en columna I")
+                break
+        else:
+            print("No se encontro el usuario a eliminar")
+
+
+
