@@ -1,7 +1,8 @@
 <h2>- 👋 Hi, I’m Lucas.
-- 🌱 I’m currently learning skills on Python and Javascript.
-- 💞️ I’m looking for a work or a project to collaborate.
-- 📫 How to reach me, linkedin/lucaslescano20.
+  <br>
+- 🌱 I’m currently learning skills on Python and Javascript.<br>
+- 💞️ I’m looking for a work or a project to collaborate.<br>
+- 📫 How to reach me, linkedin/lucaslescano20.<br>
 - 🌐 Portfolio: https://llucas890.netlify.app/.</h2>
 
 Techs:
