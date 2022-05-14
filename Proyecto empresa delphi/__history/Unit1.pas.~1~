@@ -1,0 +1,114 @@
+unit Unit1;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, Grids, DBGrids, DB, PSQLDbTables, StdCtrls;
+
+type
+  TForm1 = class(TForm)
+    BaseDatos: TPSQLDatabase;
+    b_Conectar: TButton;
+    b_Consultar: TButton;
+    Consulta1: TPSQLQuery;
+    DataSource1: TDataSource;
+    DBGrid1: TDBGrid;
+    b_Nuevo: TButton;
+    b_Modificar: TButton;
+    b_Eliminar: TButton;
+    Consulta1codigousuario: TIntegerField;
+    Consulta1nombre: TStringField;
+    Consulta1apellido: TStringField;
+    Consulta1fechanacimiento: TDateField;
+    procedure b_ConectarClick(Sender: TObject);
+    procedure b_ConsultarClick(Sender: TObject);
+    procedure b_NuevoClick(Sender: TObject);
+    procedure b_ModificarClick(Sender: TObject);
+    procedure b_EliminarClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+   procedure create(nombre: string; apellido: string; fechanacimiento: TDate);
+   procedure read();
+   procedure update(nombre: string; apellido: string; fechanacimiento: TDate);
+   procedure delete(id: integer);
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.dfm}
+
+procedure TForm1.b_ConectarClick(Sender: TObject);
+begin
+   //cargamos en tiempo de ejecucion las propiedades del componente de base de datos
+   BaseDatos.Host :=  'localhost';
+   BaseDatos.DatabaseName := 'DELPHI';
+   BaseDatos.UserName := 'postgres';
+   BaseDatos.UserPassword := 'admin';//poner aqui clave de usuario Postgres de su instalacion
+   BaseDatos.Port := 5434;
+
+   if BaseDatos.UserPassword  = '' then
+   begin
+      ShowMessage('Es necesario poner la clave antes de continuar');
+      Abort; //ésta es una excepcion silenciosa
+   end;
+   BaseDatos.Connected := True;
+   if BaseDatos.Connected then
+      ShowMessage('La conexion a la base de datos se realizo con éxito')
+   else
+      ShowMessage('La conexion a la base de datos aun sigue sin funcionar...');
+end;
+
+procedure TForm1.b_ConsultarClick(Sender: TObject);
+begin
+   //En caso del componente de consulta sus propiedades ya estan cargadas en tiempo de diseño.
+   //Por eso sólo queda abrir la consulta.
+
+   Consulta1.Close; //Cierra la consulta
+   Consulta1.Open; //Abre la consulta y muestra/refresca datos en la grilla
+end;
+
+procedure TForm1.b_NuevoClick(Sender: TObject);
+
+begin
+   {CONSIGNA N° 1: Crear en tiempo de ejecucion un componente de consulta e
+   insertar un registro en la tabla usuarios.
+
+   Los valores deben ser escritos en "componentes individuales" sobre el form y luego ingresar sus valores mediante SQL.
+   Se recomienda uso de componente:
+      TEdit -> para el codigo
+      TEdit -> para el nombre y otro para el apellido
+      TDateEdit -> para el ingreso de la fecha
+   No olvidar incluir transaccion desde el componente de base de datos de la siguiente manera:
+      BaseDatos.StartTransaction;
+      Basedatos.Commit;
+      BaseDatos.Rollback;
+   }
+   //...
+
+end;
+
+procedure TForm1.b_ModificarClick(Sender: TObject);
+{var
+   Aqui van las declaraciones de variables locales}
+begin
+   {CONSIGNA N° 2: Crear en tiempo de ejecucion un componente de consulta y
+   modificar un registro de la tabla usuarios}
+   //...
+
+end;
+
+procedure TForm1.b_EliminarClick(Sender: TObject);
+{var
+   Aqui van las declaraciones de variables locales}
+begin
+   {CONSIGNA N° 3: Crear en tiempo de ejecucion un componente de consulta y
+   eliminar un registro de la tabla usuarios}
+   //...
+
+end;
+end.
