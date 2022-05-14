@@ -3,6 +3,8 @@ import string
 from tracemalloc import stop
 from openpyxl import load_workbook
 from openpyxl.xml.constants import MAX_ROW
+import excel2img
+import pywhatkit
 
 FILE_PATH = 'E:\Documentos\inva\INVA2.xlsx'
 
@@ -31,16 +33,18 @@ while busqueda != '6':
         while busqueda != 'SALIR':
                 busqueda = input('Introduce el nombre o 2 para lista de no encontrados: ')         
                 busqueda = busqueda.upper()
+                busqueda = busqueda.replace("(BOX)", "")
+                busqueda = busqueda.replace("BOX", "")
+                busqueda = busqueda.replace("MAGUS", "AGUS")
                 busqueda = busqueda.replace(" ", "")
                 busqueda = busqueda.replace("_", "")
                 busqueda = busqueda.replace("-", "")
                 busqueda = busqueda.replace("0", "o")
-                busqueda = busqueda.replace("SrMeLiОDaS", "MELIO")
+                busqueda = busqueda.replace("SRMELI0DAS", "MELIO")
                 busqueda = busqueda.replace(".", "")
-                busqueda = busqueda.replace("sm", "")
-                busqueda = busqueda.replace("(box)", "")
-                busqueda = busqueda.replace("box", "")
+                busqueda = busqueda.replace("SM", "")
                 busqueda = busqueda.replace("BK", "")
+                busqueda = busqueda.replace("ELF", "")
                 listabusqueda.append(busqueda)
                 if len(listabusqueda) != len(set(listabusqueda)):
                     print(listabusqueda)
@@ -81,6 +85,7 @@ while busqueda != '6':
                 print(f"Se sumo una box al stock: {wb[f'B{colNB.row}'].value}\n")
     if busqueda == '5':       
         workbook.save('E:\Documentos\inva\Inva2.xlsx')
+        excel2img.export_img("inva2.xlsx", "imagen.png", "INVA", None)
         print('Guardado Exitoso'.center(40, "="))
         break
     if busqueda == '8':
@@ -136,59 +141,60 @@ while busqueda != '6':
                         wb[f'J{colNJ.row}'] = colNJ.value - 1
                         print(f"\nNombre encontrado: {busqueda}. Asistencias: {wb[f'J{colNJ.row}'].value}\n")
     if busqueda == '2':
-        busqueda = input('Ingrese el nombre de la persona que cobro: ')
-        busqueda = busqueda.upper()
-        box = input('Cuantas box cobro?: ')
-        if box == "1":
-            asistencias = int(20)
-            for colA,colNB,colC, colND,colE, colNF,colG, colNH, colI, colNJ in wb:
-                if busqueda in colA.value:
-                    wb[f'B{colNB.row}'] = colNB.value - asistencias
-                    print(f"COBRO: {busqueda} {box}+5. Asistencias: {wb[f'B{colNB.row}'].value}")
-                    break
-                elif busqueda in colC.value:
-                    wb[f'D{colND.row}'] = colND.value - asistencias
-                    print(f"COBRO: {busqueda} {box}+5. Asistencias: {wb[f'D{colND.row}'].value}")
-                    break
-                elif busqueda in colE.value:
-                    wb[f'F{colNF.row}'] = colNF.value - asistencias
-                    print(f"COBRO: {busqueda} {box}+5. Asistencias: {wb[f'F{colNF.row}'].value}")
-                    break
-                elif busqueda in colG.value:
-                    wb[f'H{colNH.row}'] = colNH.value - asistencias
-                    print(f"COBRO: {busqueda} {box}+5. Asistencias: {wb[f'H{colNH.row}'].value}")
-                    break
-                elif busqueda in colI.value:
-                    wb[f'J{colNJ.row}'] = colNJ.value - asistencias
-                    print(f"COBRO: {busqueda} {box}+5. Asistencias: {wb[f'J{colNJ.row}'].value}")
-                    break     
-            stock.value= stock.value - int(box)
-            print(f"Se resto {box} box al stock: {stock.value}\n")
-        elif box == "2":
-            asistencias = int(34)
-            for colA,colNB,colC, colND,colE, colNF,colG, colNH, colI, colNJ in wb:
-                if busqueda in colA.value:
-                    wb[f'B{colNB.row}'] = colNB.value - asistencias
-                    print(f"COBRO: {busqueda} {box}+5. Asistencias: {wb[f'B{colNB.row}'].value}")
-                    break
-                elif busqueda in colC.value:
-                    wb[f'D{colND.row}'] = colND.value - asistencias
-                    print(f"COBRO: {busqueda} {box}+5. Asistencias: {wb[f'D{colND.row}'].value}")
-                    break
-                elif busqueda in colE.value:
-                    wb[f'F{colNF.row}'] = colNF.value - asistencias
-                    print(f"COBRO: {busqueda} {box}+5. Asistencias: {wb[f'F{colNF.row}'].value}")
-                    break
-                elif busqueda in colG.value:
-                    wb[f'H{colNH.row}'] = colNH.value - asistencias
-                    print(f"COBRO: {busqueda} {box}+5. Asistencias: {wb[f'H{colNH.row}'].value}")
-                    break
-                elif busqueda in colI.value:
-                    wb[f'J{colNJ.row}'] = colNJ.value - asistencias
-                    print(f"COBRO: {busqueda} {box}+5. Asistencias: {wb[f'J{colNJ.row}'].value}")
-                    break     
-            stock.value= stock.value - int(box)
-            print(f"Se resto {box} box al stock: {stock.value}\n")
+        while busqueda != "SALIR":
+            busqueda = input('Ingrese el nombre de la persona que cobro: ')
+            busqueda = busqueda.upper()
+            box = input('Cuantas box cobro?: ')
+            if box == "1":
+                asistencias = int(20)
+                for colA,colNB,colC, colND,colE, colNF,colG, colNH, colI, colNJ in wb:
+                    if busqueda in colA.value:
+                        wb[f'B{colNB.row}'] = colNB.value - asistencias
+                        print(f"COBRO: {busqueda} {box}+5. Asistencias: {wb[f'B{colNB.row}'].value}")
+                        break
+                    elif busqueda in colC.value:
+                        wb[f'D{colND.row}'] = colND.value - asistencias
+                        print(f"COBRO: {busqueda} {box}+5. Asistencias: {wb[f'D{colND.row}'].value}")
+                        break
+                    elif busqueda in colE.value:
+                        wb[f'F{colNF.row}'] = colNF.value - asistencias
+                        print(f"COBRO: {busqueda} {box}+5. Asistencias: {wb[f'F{colNF.row}'].value}")
+                        break
+                    elif busqueda in colG.value:
+                        wb[f'H{colNH.row}'] = colNH.value - asistencias
+                        print(f"COBRO: {busqueda} {box}+5. Asistencias: {wb[f'H{colNH.row}'].value}")
+                        break
+                    elif busqueda in colI.value:
+                        wb[f'J{colNJ.row}'] = colNJ.value - asistencias
+                        print(f"COBRO: {busqueda} {box}+5. Asistencias: {wb[f'J{colNJ.row}'].value}")
+                        break     
+                stock.value= stock.value - int(box)
+                print(f"Se resto {box} box al stock: {stock.value}\n")
+            elif box == "2":
+                asistencias = int(34)
+                for colA,colNB,colC, colND,colE, colNF,colG, colNH, colI, colNJ in wb:
+                    if busqueda in colA.value:
+                        wb[f'B{colNB.row}'] = colNB.value - asistencias
+                        print(f"COBRO: {busqueda} {box}+5. Asistencias: {wb[f'B{colNB.row}'].value}")
+                        break
+                    elif busqueda in colC.value:
+                        wb[f'D{colND.row}'] = colND.value - asistencias
+                        print(f"COBRO: {busqueda} {box}+5. Asistencias: {wb[f'D{colND.row}'].value}")
+                        break
+                    elif busqueda in colE.value:
+                        wb[f'F{colNF.row}'] = colNF.value - asistencias
+                        print(f"COBRO: {busqueda} {box}+5. Asistencias: {wb[f'F{colNF.row}'].value}")
+                        break
+                    elif busqueda in colG.value:
+                        wb[f'H{colNH.row}'] = colNH.value - asistencias
+                        print(f"COBRO: {busqueda} {box}+5. Asistencias: {wb[f'H{colNH.row}'].value}")
+                        break
+                    elif busqueda in colI.value:
+                        wb[f'J{colNJ.row}'] = colNJ.value - asistencias
+                        print(f"COBRO: {busqueda} {box}+5. Asistencias: {wb[f'J{colNJ.row}'].value}")
+                        break     
+                stock.value= stock.value - int(box)
+                print(f"Se resto {box} box al stock: {stock.value}\n")
     if busqueda == "3":
         agregar = input("Ingrese el nuevo personaje: ")
         agregar = agregar.upper()
@@ -253,6 +259,50 @@ while busqueda != '6':
                 break
         else:
             print("No se encontro el usuario a eliminar")
-
-
-
+    if busqueda == '12':
+            while busqueda != 'SALIR':
+                    busqueda = input('DOBLE ASISTENCIA: ')         
+                    busqueda = busqueda.upper()
+                    busqueda = busqueda.replace(" ", "")
+                    busqueda = busqueda.replace("_", "")
+                    busqueda = busqueda.replace("-", "")
+                    busqueda = busqueda.replace("0", "o")
+                    busqueda = busqueda.replace("SrMeLiОDaS", "MELIO")
+                    busqueda = busqueda.replace(".", "")
+                    busqueda = busqueda.replace("sm", "")
+                    busqueda = busqueda.replace("(box)", "")
+                    busqueda = busqueda.replace("box", "")
+                    busqueda = busqueda.replace("BK", "")
+                    listabusqueda.append(busqueda)
+                    if len(listabusqueda) != len(set(listabusqueda)):
+                        print(listabusqueda)
+                        print(f"Se encontro un duplicado {busqueda}")
+                        listabusqueda.clear()
+                        break
+                    for colA,colNB,colC, colND,colE, colNF,colG, colNH, colI, colNJ in wb:
+                        if busqueda in colA.value:
+                            wb[f'B{colNB.row}'] = colNB.value + 2
+                            print(f"Nombre encontrado: {busqueda}. Asistencias: {wb[f'B{colNB.row}'].value}\n")
+                            break
+                        elif busqueda in colC.value:
+                            wb[f'D{colND.row}'] = colND.value + 2
+                            print(f"Nombre encontrado: {busqueda}. Asistencias: {wb[f'D{colND.row}'].value}\n")
+                            break
+                        elif busqueda in colE.value:
+                            wb[f'F{colNF.row}'] = colNF.value + 2
+                            print(f"Nombre encontrado: {busqueda}. Asistencias: {wb[f'F{colNF.row}'].value}\n")
+                            break
+                        elif busqueda in colG.value:
+                            wb[f'H{colNH.row}'] = colNH.value + 2
+                            print(f"Nombre encontrado: {busqueda}. Asistencias: {wb[f'H{colNH.row}'].value}\n")
+                            break
+                        elif busqueda in colI.value:
+                            wb[f'J{colNJ.row}'] = colNJ.value + 2
+                            print(f"Nombre encontrado: {busqueda}. Asistencias: {wb[f'J{colNJ.row}'].value}\n")
+                            break
+                    else:
+                        nombresnoencontrados.append(busqueda)
+                    if busqueda == '2':
+                        print(f"Nombres no encontrados: {nombresnoencontrados}")
+    # if busqueda == "14":
+    #     pywhatkit.sendwhats_image("BEwLU0jxJl5KzPNpLsQBJV", "imagen.png", "Prueba")
