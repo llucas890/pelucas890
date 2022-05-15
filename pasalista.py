@@ -1,10 +1,7 @@
-from operator import length_hint
-import string
-from tracemalloc import stop
 from openpyxl import load_workbook
 from openpyxl.xml.constants import MAX_ROW
 import excel2img
-import pywhatkit
+# import pywhatkit
 
 FILE_PATH = 'E:\Documentos\inva\INVA2.xlsx'
 
@@ -21,11 +18,11 @@ while busqueda != '6':
     print('3 Para agregar nuevos usuarios')
     print('4 Para agregar una box al stock')
     print('5 Para guardar y salir')
-    print('6 Para salir sin guardar')
+    print('6 ')
     print('7 Para eliminar un usuario de la lista')
     print('8 Para restar asist a todos')
     print('9 Eliminar asistencias')
-    print('Programa creado por Lucas Lescano alias Desxz')
+    print('Programa creado por Lucas Lescano')
     print('https://www.linkedin.com/in/lucaslescano20/')
     busqueda = input('Ingresa la opcion: ')
     print('')
@@ -76,75 +73,13 @@ while busqueda != '6':
                     nombresnoencontrados.append(busqueda)
                 if busqueda == '2':
                     print(f"Nombres no encontrados: {nombresnoencontrados}")
-                
-    if busqueda == '4':
-        busqueda = 'STOCK'
-        for colA,colNB,colC, colND,colE, colNF,colG, colNH, colI, colNJ in wb:
-            if busqueda in colA.value:
-                wb[f'B{colNB.row}'] = colNB.value + 1
-                print(f"Se sumo una box al stock: {wb[f'B{colNB.row}'].value}\n")
-    if busqueda == '5':       
-        workbook.save('E:\Documentos\inva\Inva2.xlsx')
-        excel2img.export_img("inva2.xlsx", "imagen.png", "INVA", None)
-        print('Guardado Exitoso'.center(40, "="))
-        break
-    if busqueda == '8':
-        numero = input("Cuantas asist deseas restar?: ")
-        numero = int(numero)
-        for row in range(2, wb.max_row+1):
-            cell = wb.cell(row=row, column=2)
-            if cell.value is not wb['B17']:
-                cell.value = cell.value - numero
-        for row in range(2, wb.max_row+1):
-            cell = wb.cell(row=row, column=4)
-            if cell.value is not wb['B17']:
-                cell.value = cell.value - numero
-        for row in range(2, wb.max_row+1):
-            cell = wb.cell(row=row, column=6)
-            if cell.value is not wb['B17']:
-                cell.value = cell.value - numero
-        for row in range(2, wb.max_row+1):
-            cell = wb.cell(row=row, column=8)
-            if cell.value is not wb['B17']:
-                cell.value = cell.value - numero
-        for row in range(2, wb.max_row+1):
-            cell = wb.cell(row=row, column=10)
-            if cell.value is not wb['B17']:
-                cell.value = cell.value - numero
-        stock.value = stock.value + numero
-        print(f"Se restaron correctamente las {numero} asistencias a todos.")
-        print(f"Stock: {stock.value}")
-    if busqueda == '9':
-        while busqueda != 'SALIR':
-                busqueda = input('////// Introduce A RESTAR: /////')         
-                busqueda = busqueda.upper()
-                busqueda = busqueda.strip()
-                busqueda = busqueda.replace(" ", "")
-                busqueda = busqueda.replace("-", "")
-                busqueda = busqueda.replace("0", "o")
-                busqueda = busqueda.replace("SrMeLiОDaS", "MELIO")
-                busqueda = busqueda.replace(".", "")
-                for colA,colNB,colC, colND,colE, colNF,colG, colNH, colI, colNJ in wb:
-                    if busqueda in colA.value:
-                        wb[f'B{colNB.row}'] = colNB.value - 1
-                        print(f"\nNombre encontrado: {busqueda}. Asistencias: {wb[f'B{colNB.row}'].value}\n")
-                    elif busqueda in colC.value:
-                        wb[f'D{colND.row}'] = colND.value - 1
-                        print(f"\nNombre encontrado: {busqueda}. Asistencias: {wb[f'D{colND.row}'].value}\n")
-                    elif busqueda in colE.value:
-                        wb[f'F{colNF.row}'] = colNF.value - 1
-                        print(f"\nNombre encontrado: {busqueda}. Asistencias: {wb[f'F{colNF.row}'].value}\n")
-                    elif busqueda in colG.value:
-                        wb[f'H{colNH.row}'] = colNH.value - 1
-                        print(f"\nNombre encontrado: {busqueda}. Asistencias: {wb[f'H{colNH.row}'].value}\n")
-                    elif busqueda in colI.value:
-                        wb[f'J{colNJ.row}'] = colNJ.value - 1
-                        print(f"\nNombre encontrado: {busqueda}. Asistencias: {wb[f'J{colNJ.row}'].value}\n")
     if busqueda == '2':
-        while busqueda != "SALIR":
-            busqueda = input('Ingrese el nombre de la persona que cobro: ')
-            busqueda = busqueda.upper()
+        busqueda = input('Ingrese el nombre de la persona que cobro: ')
+        busqueda = busqueda.upper()
+        box = ""
+        while box != "SALIR":
             box = input('Cuantas box cobro?: ')
+            box = box.upper()
             if box == "1":
                 asistencias = int(20)
                 for colA,colNB,colC, colND,colE, colNF,colG, colNH, colI, colNJ in wb:
@@ -202,31 +137,42 @@ while busqueda != '6':
         for colA,colNB,colC, colND,colE, colNF,colG, colNH, colI, colNJ in wb:
             if busqueda == colA.value:
                 wb[f'A{colA.row}'] = agregar
-                wb[f'B{colNB.row}'] = 0
-                print(f"Se agrego el usuario {agregar} en columna A")
+                wb[f'B{colNB.row}'] = 1
+                print(f"Se agrego el usuario {agregar} en columna A con asist {wb[f'B{colNB.row}'].value}")
                 break
             elif busqueda == colC.value:
                 wb[f'C{colC.row}'] = agregar
-                wb[f'D{colND.row}'] = 0
-                print(f"Se agrego el usuario {agregar} en columna C")
+                wb[f'D{colND.row}'] = 1
+                print(f"Se agrego el usuario {agregar} en columna C con asist {wb[f'D{colND.row}'].value}")
                 break
             elif busqueda == colE.value:
                 wb[f'E{colE.row}'] = agregar
-                wb[f'F{colNF.row}'] = 0
-                print(f"Se agrego el usuario {agregar} en columna E")
+                wb[f'F{colNF.row}'] = 1
+                print(f"Se agrego el usuario {agregar} en columna E con asist {wb[f'F{colNF.row}'].value}")
                 break
             elif busqueda == colG.value:
                 wb[f'G{colG.row}'] = agregar
-                wb[f'H{colNH.row}'] = 0
-                print(f"Se agrego el usuario {agregar} en columna G")
+                wb[f'H{colNH.row}'] = 1
+                print(f"Se agrego el usuario {agregar} en columna G con asist {wb[f'H{colNH.row}'].value}")
                 break
             elif busqueda == colI.value:
                 wb[f'I{colI.row}'] = agregar
-                wb[f'J{colNJ.row}'] = 0
-                print(f"Se agrego el usuario {agregar} en columna I")
+                wb[f'J{colNJ.row}'] = 1
+                print(f"Se agrego el usuario {agregar} en columna I con asist {wb[f'J{colNJ.row}'].value}")
                 break
         else:
-            print("No se encontro un slot libre")
+            print("No se encontro un slot libre")            
+    if busqueda == '4':
+        busqueda = 'STOCK'
+        for colA,colNB,colC, colND,colE, colNF,colG, colNH, colI, colNJ in wb:
+            if busqueda in colA.value:
+                wb[f'B{colNB.row}'] = colNB.value + 1
+                print(f"Se sumo una box al stock: {wb[f'B{colNB.row}'].value}\n")
+    if busqueda == '5':       
+        workbook.save('E:\Documentos\inva\Inva2.xlsx')
+        excel2img.export_img("inva2.xlsx", "imagen.png", "INVA", None)
+        print('Guardado Exitoso'.center(40, "="))
+        break
     if busqueda == "7":
         agregar = input("Ingrese el usuario a eliminar: ")
         agregar = agregar.upper()
@@ -259,7 +205,59 @@ while busqueda != '6':
                 break
         else:
             print("No se encontro el usuario a eliminar")
-    if busqueda == '12':
+    if busqueda == '8':
+        numero = input("Cuantas asist deseas restar?: ")
+        numero = int(numero)
+        for row in range(2, wb.max_row+1):
+            cell = wb.cell(row=row, column=2)
+            if cell.value is not wb['B17']:
+                cell.value = cell.value - numero
+        for row in range(2, wb.max_row+1):
+            cell = wb.cell(row=row, column=4)
+            if cell.value is not wb['B17']:
+                cell.value = cell.value - numero
+        for row in range(2, wb.max_row+1):
+            cell = wb.cell(row=row, column=6)
+            if cell.value is not wb['B17']:
+                cell.value = cell.value - numero
+        for row in range(2, wb.max_row+1):
+            cell = wb.cell(row=row, column=8)
+            if cell.value is not wb['B17']:
+                cell.value = cell.value - numero
+        for row in range(2, wb.max_row+1):
+            cell = wb.cell(row=row, column=10)
+            if cell.value is not wb['B17']:
+                cell.value = cell.value - numero
+        stock.value = stock.value + numero
+        print(f"Se restaron correctamente las {numero} asistencias a todos.")
+        print(f"Stock: {stock.value}")
+    if busqueda == '9':
+        while busqueda != 'SALIR':
+                busqueda = input('////// Introduce A RESTAR: /////')         
+                busqueda = busqueda.upper()
+                busqueda = busqueda.strip()
+                busqueda = busqueda.replace(" ", "")
+                busqueda = busqueda.replace("-", "")
+                busqueda = busqueda.replace("0", "o")
+                busqueda = busqueda.replace("SrMeLiОDaS", "MELIO")
+                busqueda = busqueda.replace(".", "")
+                for colA,colNB,colC, colND,colE, colNF,colG, colNH, colI, colNJ in wb:
+                    if busqueda in colA.value:
+                        wb[f'B{colNB.row}'] = colNB.value - 1
+                        print(f"\nNombre encontrado: {busqueda}. Asistencias: {wb[f'B{colNB.row}'].value}\n")
+                    elif busqueda in colC.value:
+                        wb[f'D{colND.row}'] = colND.value - 1
+                        print(f"\nNombre encontrado: {busqueda}. Asistencias: {wb[f'D{colND.row}'].value}\n")
+                    elif busqueda in colE.value:
+                        wb[f'F{colNF.row}'] = colNF.value - 1
+                        print(f"\nNombre encontrado: {busqueda}. Asistencias: {wb[f'F{colNF.row}'].value}\n")
+                    elif busqueda in colG.value:
+                        wb[f'H{colNH.row}'] = colNH.value - 1
+                        print(f"\nNombre encontrado: {busqueda}. Asistencias: {wb[f'H{colNH.row}'].value}\n")
+                    elif busqueda in colI.value:
+                        wb[f'J{colNJ.row}'] = colNJ.value - 1
+                        print(f"\nNombre encontrado: {busqueda}. Asistencias: {wb[f'J{colNJ.row}'].value}\n")
+    if busqueda == '11':
             while busqueda != 'SALIR':
                     busqueda = input('DOBLE ASISTENCIA: ')         
                     busqueda = busqueda.upper()
