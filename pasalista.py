@@ -133,7 +133,7 @@ while busqueda != '6':
                         print(f"COBRO: {busqueda} {box * cuantasVeces}+5. Asistencias: {wb[f'J{colNJ.row}'].value}")
                         break     
                 stock.value= stock.value - int(box * cuantasVeces)
-                print(f"Se resto {box} box al stock: {stock.value}\n")
+                print(f"Se resto {box * cuantasVeces} box al stock: {stock.value}\n")
     if busqueda == "3":
         agregar = input("Ingrese el nuevo personaje: ")
         agregar = agregar.upper()
